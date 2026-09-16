@@ -1,0 +1,18 @@
+{
+  "name": "@world-building/game-engine",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc -b",
+    "start": "node dist/main.js"
+  },
+  "dependencies": {
+    "@world-building/campaign": "workspace:*",
+    "@world-building/character": "workspace:*",
+    "@world-building/combat": "workspace:*",
+    "@world-building/domain": "workspace:*",
+    "@world-building/persistence": "workspace:*",
+    "@world-building/shared": "workspace:*"
+  }
+}
