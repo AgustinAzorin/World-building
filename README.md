@@ -14,7 +14,7 @@ apps/
 packages/
   shared/        tipos base compartidos (Id, Result, errores de dominio)
   domain/        entidades y reglas puras + contrato del motor determinista
-  character/     casos de uso de gestión de personajes
+  character/     motor de personajes: casos de uso, agregado y contrato hacia el motor de combate
   combat/        casos de uso del motor de combate
   campaign/       casos de uso de campañas
   scenes/        casos de uso de línea de tiempo y escenas

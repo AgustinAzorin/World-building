@@ -9,6 +9,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@world-building/content": "workspace:*",
     "@world-building/domain": "workspace:*",
     "@world-building/shared": "workspace:*"
   }

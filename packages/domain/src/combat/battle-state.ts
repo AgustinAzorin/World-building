@@ -41,3 +41,8 @@ export function findCombatant(
 export function cellKey(cell: GridCell): string {
   return `${cell.x},${cell.y}`;
 }
+
+/** Distancia en casillas (Chebyshev): la métrica de cuadrícula común a mesa. */
+export function gridDistance(a: GridCell, b: GridCell): number {
+  return Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y));
+}
