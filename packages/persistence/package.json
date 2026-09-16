@@ -1,0 +1,19 @@
+{
+  "name": "@world-building/persistence",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@world-building/campaign": "workspace:*",
+    "@world-building/character": "workspace:*",
+    "@world-building/combat": "workspace:*",
+    "@world-building/domain": "workspace:*",
+    "@world-building/scenes": "workspace:*",
+    "@world-building/shared": "workspace:*"
+  }
+}

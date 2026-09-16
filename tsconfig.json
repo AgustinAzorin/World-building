@@ -1,0 +1,16 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/shared" },
+    { "path": "packages/domain" },
+    { "path": "packages/character" },
+    { "path": "packages/combat" },
+    { "path": "packages/campaign" },
+    { "path": "packages/scenes" },
+    { "path": "packages/content" },
+    { "path": "packages/persistence" },
+    { "path": "packages/renderer" },
+    { "path": "apps/game-engine" },
+    { "path": "apps/web" }
+  ]
+}
