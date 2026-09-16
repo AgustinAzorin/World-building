@@ -1,12 +1,20 @@
+import {
+  availableActions,
+  availableMovement,
+  createCharacter,
+  defenses,
+  loadCharacterAggregate,
+  type CharacterEngineContext,
+} from "@world-building/character";
 import { createCampaign } from "@world-building/campaign";
-import { createCharacter } from "@world-building/character";
 import { createBattle, endTurn, executeAction, startBattle } from "@world-building/combat";
+import { createContentRegistries } from "@world-building/content";
 import type { Action, BattleState } from "@world-building/domain";
 import {
   InMemoryBattleRepository,
   InMemoryBattleStateRepository,
   InMemoryCampaignRepository,
-  InMemoryCharacterRepository,
+  createInMemoryCharacterRepositories,
 } from "@world-building/persistence";
 import { createId, type Result } from "@world-building/shared";
 import { moveRule } from "./rules/move-rule";
@@ -20,14 +28,16 @@ function unwrap<T>(result: Result<T>): T {
 
 /**
  * Demuestra que el motor de dominio corre sin navegador (sección 15):
- * GameState + Action -> Result + NewGameState, wireado con casos de uso
- * y repositorios en memoria.
+ * un personaje recién creado, sin configuración adicional, expone al motor
+ * de combate sus defensas y acciones disponibles (sección 13 del sistema de
+ * personajes) y puede introducirse directamente en una batalla.
  */
 async function main() {
   const campaignRepo = new InMemoryCampaignRepository();
-  const characterRepo = new InMemoryCharacterRepository();
+  const characterRepos = createInMemoryCharacterRepositories();
   const battleRepo = new InMemoryBattleRepository();
   const battleStateRepo = new InMemoryBattleStateRepository();
+  const content = createContentRegistries();
 
   const campaign = unwrap(
     await createCampaign(campaignRepo, {
@@ -38,13 +48,33 @@ async function main() {
   );
 
   const character = unwrap(
-    await createCharacter(characterRepo, {
+    await createCharacter(characterRepos, {
       campaignId: campaign.id,
       name: "Aria",
-      hitPoints: { current: 20, max: 20 },
-      armorClass: 15,
-      speed: 30,
+      baseSpeed: 30,
+      hitPoints: { max: 20 },
+      attributeScores: {
+        strength: 12,
+        dexterity: 16,
+        constitution: 14,
+        intelligence: 10,
+        wisdom: 12,
+        charisma: 8,
+      },
     }),
+  );
+
+  const aggregate = unwrap(await loadCharacterAggregate(characterRepos, character.id));
+  const engineContext: CharacterEngineContext = { aggregate, content };
+  const characterDefenses = defenses(engineContext);
+  const movement = availableMovement(engineContext);
+
+  console.log(
+    `${character.name} — CA ${characterDefenses.armorClass.total} (${characterDefenses.armorClass.breakdown
+      .map((entry) => `${entry.source}: ${entry.amount}`)
+      .join(", ")}), acciones disponibles: ${availableActions(engineContext)
+      .map((action) => action.name)
+      .join(", ")}`,
   );
 
   const battle = unwrap(
@@ -64,9 +94,12 @@ async function main() {
         id: character.id,
         characterId: character.id,
         name: character.name,
-        hitPoints: character.hitPoints,
-        armorClass: character.armorClass,
-        speed: character.speed,
+        hitPoints: {
+          current: characterDefenses.hitPoints.current,
+          max: characterDefenses.hitPoints.max.total,
+        },
+        armorClass: characterDefenses.armorClass.total,
+        speed: movement.total,
         position: { x: 0, y: 0 },
         actionsRemaining: 1,
         resources: {},

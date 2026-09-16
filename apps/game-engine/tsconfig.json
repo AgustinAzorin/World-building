@@ -9,6 +9,7 @@
     { "path": "../../packages/campaign" },
     { "path": "../../packages/character" },
     { "path": "../../packages/combat" },
+    { "path": "../../packages/content" },
     { "path": "../../packages/domain" },
     { "path": "../../packages/persistence" },
     { "path": "../../packages/shared" }

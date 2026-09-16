@@ -11,6 +11,7 @@
     "@world-building/campaign": "workspace:*",
     "@world-building/character": "workspace:*",
     "@world-building/combat": "workspace:*",
+    "@world-building/content": "workspace:*",
     "@world-building/domain": "workspace:*",
     "@world-building/persistence": "workspace:*",
     "@world-building/shared": "workspace:*"

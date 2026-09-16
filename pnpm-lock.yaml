@@ -29,6 +29,9 @@ importers:
       '@world-building/combat':
         specifier: workspace:*
         version: link:../../packages/combat
+      '@world-building/content':
+        specifier: workspace:*
+        version: link:../../packages/content
       '@world-building/domain':
         specifier: workspace:*
         version: link:../../packages/domain
@@ -52,6 +55,9 @@ importers:
 
   packages/character:
     dependencies:
+      '@world-building/content':
+        specifier: workspace:*
+        version: link:../content
       '@world-building/domain':
         specifier: workspace:*
         version: link:../domain

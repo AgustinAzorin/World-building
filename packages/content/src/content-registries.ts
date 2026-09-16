@@ -1,19 +1,28 @@
-import type { Ability, Equipment, Feat, Item, Spell } from "@world-building/domain";
+import type {
+  AttributeDefinition,
+  Equipment,
+  FeatureDefinition,
+  Item,
+  SkillDefinition,
+  Spell,
+} from "@world-building/domain";
 import { createContentRegistry, type ContentRegistry } from "./registry";
 
 export interface ContentRegistries {
-  abilities: ContentRegistry<Ability>;
+  attributes: ContentRegistry<AttributeDefinition>;
+  skills: ContentRegistry<SkillDefinition>;
+  features: ContentRegistry<FeatureDefinition>;
   spells: ContentRegistry<Spell>;
-  feats: ContentRegistry<Feat>;
   items: ContentRegistry<Item>;
   equipment: ContentRegistry<Equipment>;
 }
 
 export function createContentRegistries(): ContentRegistries {
   return {
-    abilities: createContentRegistry<Ability>(),
+    attributes: createContentRegistry<AttributeDefinition>(),
+    skills: createContentRegistry<SkillDefinition>(),
+    features: createContentRegistry<FeatureDefinition>(),
     spells: createContentRegistry<Spell>(),
-    feats: createContentRegistry<Feat>(),
     items: createContentRegistry<Item>(),
     equipment: createContentRegistry<Equipment>(),
   };
