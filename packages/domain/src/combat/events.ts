@@ -18,6 +18,12 @@ export interface TurnStarted extends BaseCombatEvent {
   type: "TurnStarted";
 }
 
+/** Sección 2/6: tirada de iniciativa de un participante al empezar la batalla. */
+export interface InitiativeRolled extends BaseCombatEvent {
+  type: "InitiativeRolled";
+  roll: number;
+}
+
 export interface MovementPerformed extends BaseCombatEvent {
   type: "MovementPerformed";
   from: GridCell;
@@ -48,6 +54,30 @@ export interface ConditionApplied extends BaseCombatEvent {
   conditionKey: string;
 }
 
+export interface ConditionExpired extends BaseCombatEvent {
+  type: "ConditionExpired";
+  targetId: Id;
+  conditionKey: string;
+}
+
+export interface HealingApplied extends BaseCombatEvent {
+  type: "HealingApplied";
+  targetId: Id;
+  amount: number;
+}
+
+export interface EffectApplied extends BaseCombatEvent {
+  type: "EffectApplied";
+  targetId: Id;
+  effectKind: string;
+}
+
+export interface EffectExpired extends BaseCombatEvent {
+  type: "EffectExpired";
+  targetId: Id;
+  effectKind: string;
+}
+
 export interface SpellCast extends BaseCombatEvent {
   type: "SpellCast";
   spellId: Id;
@@ -58,14 +88,26 @@ export interface TurnEnded extends BaseCombatEvent {
   type: "TurnEnded";
 }
 
+/** Comodín para acciones sin resolución compuesta propia (defender, ayudar, esconderse...). */
+export interface ActionPerformed extends BaseCombatEvent {
+  type: "ActionPerformed";
+  actionType: string;
+}
+
 export type CombatEvent =
   | TurnStarted
+  | InitiativeRolled
   | MovementPerformed
   | AttackDeclared
   | AttackResolved
   | DamageApplied
+  | HealingApplied
   | ConditionApplied
+  | ConditionExpired
+  | EffectApplied
+  | EffectExpired
   | SpellCast
+  | ActionPerformed
   | TurnEnded;
 
 export interface CombatLogEntry {
